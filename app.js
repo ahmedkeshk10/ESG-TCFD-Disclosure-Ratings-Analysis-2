@@ -106,7 +106,9 @@ const translations = {
         esgSectorsBarTitle: 'التوزيع حسب القطاع المالي',
         esgListedNonBankTitle: 'الشركات المالية غير المصرفية',
         esgListedOtherTitle: 'القطاعات الأخرى',
+        esgSectorDistributionTitle: 'التوزيع حسب القطاع المالي',
         tcfdNonListedPieTitle: 'التوزيع العام للتقييمات',
+        tcfdSectorDistributionTitle: 'التوزيع حسب القطاع المالي',
         tcfdAllSectorsTitle: 'التوزيع حسب القطاع المالي',
         tcfdListedPieTitle: 'التوزيع العام للتقييمات',
         tcfdListedNonBankTitle: 'الشركات المالية غير المصرفية',
@@ -140,7 +142,9 @@ const translations = {
         esgSectorsBarTitle: 'Distribution by Financial Sector',
         esgListedNonBankTitle: 'Non-Banking Financial Companies',
         esgListedOtherTitle: 'Other Sectors',
+        esgSectorDistributionTitle: 'Distribution by Financial Sector',
         tcfdNonListedPieTitle: 'Overall Rating Distribution',
+        tcfdSectorDistributionTitle: 'Distribution by Financial Sector',
         tcfdAllSectorsTitle: 'Distribution by Financial Sector',
         tcfdListedPieTitle: 'Overall Rating Distribution',
         tcfdListedNonBankTitle: 'Non-Banking Financial Companies',
@@ -200,16 +204,40 @@ function updateTexts() {
     // Update chart titles
     document.getElementById('esgNonListedPieTitle').textContent = t.esgNonListedPieTitle;
     document.getElementById('esgListedPieTitle').textContent = t.esgListedPieTitle;
-    document.getElementById('esgSectorsBarTitle').textContent = t.esgSectorsBarTitle;
     document.getElementById('esgListedNonBankTitle').textContent = t.esgListedNonBankTitle;
     document.getElementById('esgListedOtherTitle').textContent = t.esgListedOtherTitle;
+    document.getElementById('esgSectorDistributionTitle').textContent = t.esgSectorDistributionTitle;
     document.getElementById('tcfdNonListedPieTitle').textContent = t.tcfdNonListedPieTitle;
-    document.getElementById('tcfdAllSectorsTitle').textContent = t.tcfdAllSectorsTitle;
+    document.getElementById('tcfdSectorDistributionTitle').textContent = t.tcfdSectorDistributionTitle;
     document.getElementById('tcfdListedPieTitle').textContent = t.tcfdListedPieTitle;
     document.getElementById('tcfdListedNonBankTitle').textContent = t.tcfdListedNonBankTitle;
     document.getElementById('tcfdListedOtherTitle').textContent = t.tcfdListedOtherTitle;
     document.getElementById('comparisonNonListedTitle').textContent = t.comparisonNonListedTitle;
     document.getElementById('comparisonListedTitle').textContent = t.comparisonListedTitle;
+    
+    // Update ESG sector chart titles (all 7 sectors)
+    esgData.nonListedSectors.forEach((sector, index) => {
+        const titleElement = document.getElementById(`esgSector${index}Title`);
+        if (titleElement) {
+            const sectorName = currentLang === 'ar' ? `${sector.icon} ${sector.nameAr}` : `${sector.icon} ${sector.nameEn}`;
+            titleElement.textContent = sectorName;
+        }
+    });
+    
+    // Update TCFD sector chart titles
+    const capitalMarket = tcfdData.allSectors[0];
+    const capitalMarketName = currentLang === 'ar' ? `${capitalMarket.icon} ${capitalMarket.nameAr}` : `${capitalMarket.icon} ${capitalMarket.nameEn}`;
+    const capitalMarketTitle = document.getElementById('tcfdCapitalMarketTitle');
+    if (capitalMarketTitle) capitalMarketTitle.textContent = capitalMarketName;
+    
+    const insurance = tcfdData.allSectors[1];
+    const insuranceName = currentLang === 'ar' ? `${insurance.icon} ${insurance.nameAr}` : `${insurance.icon} ${insurance.nameEn}`;
+    const insuranceTitle = document.getElementById('tcfdInsuranceTitle');
+    if (insuranceTitle) insuranceTitle.textContent = insuranceName;
+    
+    const otherFinanceTitle = currentLang === 'ar' ? 'باقي القطاعات التمويلية' : 'Other Finance Sectors';
+    const otherFinanceTitleElement = document.getElementById('tcfdOtherFinanceTitle');
+    if (otherFinanceTitleElement) otherFinanceTitleElement.textContent = otherFinanceTitle;
     
     // Update table section titles
     const esgTablesTitle = document.getElementById('esgTablesTitle');
